@@ -10,4 +10,4 @@ img = pca.draw()
 # print(img)
 
 import toyplot.png
-toyplot.png.render(img[0], "anolis.png")
+toyplot.png.render(img[0], "result.png")
