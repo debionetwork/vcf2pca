@@ -21,22 +21,27 @@ def get_job_details():
         for did in job['dids']:
             # get the ddo from disk
             filename = '/data/ddos/' + did
+            print(f'Reading and printing file {filename}')
+            f = open(filename, 'r')
+            print(f.read())
+            
             print(f'Reading json from {filename}')
             with open(filename) as json_file:
                 ddo = json.load(json_file)
                 print("====== DDO ======")
                 print(ddo)
                 print(json_file)
-                # search for metadata service
-                for service in ddo['service']:
-                    print("====== Service ======")
-                    if service['type'] == 'metadata':
-                        job['files'][did] = list()
-                        index = 0
-                        for file in service['attributes']['main']['files']:
-                            job['files'][did].append(
-                                '/data/inputs/' + did + '/' + str(index))
-                            index = index + 1
+                if ddo is not None:
+                    # search for metadata service
+                    for service in ddo['service']:
+                        print("====== Service ======")
+                        if service['type'] == 'metadata':
+                            job['files'][did] = list()
+                            index = 0
+                            for file in service['attributes']['main']['files']:
+                                job['files'][did].append(
+                                    '/data/inputs/' + did + '/' + str(index))
+                                index = index + 1
     if algo_did is not None:
         job['algo']['did'] = algo_did
         job['algo']['ddo_path'] = '/data/ddos/' + algo_did
