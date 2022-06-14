@@ -25,6 +25,7 @@ def get_job_details():
             with open(filename) as json_file:
                 ddo = json.load(json_file)
                 print("====== DDO ======")
+                print(ddo)
                 # search for metadata service
                 for service in ddo['service']:
                     print("====== Service ======")
