@@ -15,26 +15,20 @@ def get_job_details():
     job['algo'] = dict()
     job['secret'] = os.getenv('secret', None)
     algo_did = os.getenv('TRANSFORMATION_DID', None)
-    print("====== Job ======")
-    print("====== Algo DID ======")
     if job['dids'] is not None:
         for did in job['dids']:
             # get the ddo from disk
             filename = '/data/ddos/' + did
-            print(f'Reading and printing file {filename}')
+            print(f'Reading and printing data file {filename}')
             f = open(filename, 'r')
             print(f.read())
             
             print(f'Reading json from {filename}')
             with open(filename) as json_file:
                 ddo = json.load(json_file)
-                print("====== DDO ======")
-                print(ddo)
-                print(json_file)
                 if ddo is not None:
                     # search for metadata service
                     for service in ddo['service']:
-                        print("====== Service ======")
                         if service['type'] == 'metadata':
                             job['files'][did] = list()
                             index = 0
@@ -43,6 +37,11 @@ def get_job_details():
                                     '/data/inputs/' + did + '/' + str(index))
                                 index = index + 1
     if algo_did is not None:
+        filename = '/data/ddos/' + algo_did
+        print(f'Reading and printing algo file {filename}')
+        f = open(filename, 'r')
+        print(f.read())
+            
         job['algo']['did'] = algo_did
         job['algo']['ddo_path'] = '/data/ddos/' + algo_did
     return job
